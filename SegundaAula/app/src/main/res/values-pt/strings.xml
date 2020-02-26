@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Segunda Aula</string>
+    <string name="hello_world">Olá Mundo</string>
+    <string name="welcome">Bem Vindo</string>
+    <string name="str_text">Texto</string>
+    <string name="hint_enter_text">Enter Text</string>
+</resources>
