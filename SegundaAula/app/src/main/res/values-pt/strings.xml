@@ -4,5 +4,5 @@
     <string name="hello_world">Olá Mundo</string>
     <string name="welcome">Bem Vindo</string>
     <string name="str_text">Texto</string>
-    <string name="hint_enter_text">Enter Text</string>
+    <string name="hint_enter_text">Entre com o texto</string>
 </resources>
