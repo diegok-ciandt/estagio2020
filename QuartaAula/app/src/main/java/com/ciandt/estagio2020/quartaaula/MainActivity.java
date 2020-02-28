@@ -8,10 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
 import com.ciandt.estagio2020.quartaaula.databinding.ActivityMainBinding;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,16 +25,18 @@ public class MainActivity extends AppCompatActivity {
 
     private final int RESULT_DATA_SCREEN = 100120;
 
+    private OperationVolley operationVolley = new OperationVolley();
+
+    private Response.Listener<String> successListener;
+
+    private Response.ErrorListener errorListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        operationVolley.setup(this);
+        setupListener();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-//        binding.switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -86,5 +94,50 @@ public class MainActivity extends AppCompatActivity {
             binding.textViewResult.setText(message);
         }
 
+    }
+
+    public void requestData(View v) {
+        loadImage();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                operationVolley.request("https://www.google.com",
+                        successListener, errorListener);
+            }
+        }).start();
+
+    }
+
+    private void setupListener() {
+        successListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "onResponse: SUCESSO");
+                writeResponse(response);
+            }
+        };
+
+        errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("TAG", "onResponse: FALHA");
+            }
+        };
+    }
+
+    private void writeResponse(final String strResponse) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                binding.textViewLoadData.setText(strResponse);
+            }
+        });
+    }
+
+    private void loadImage() {
+        int rand = new Random().nextInt(500)+100;
+        String urlImg = "https://www.internetvibes.net/wp-content/gallery/avatars/"+rand+".png";
+        Glide.with(this).load(urlImg).into(binding.imageView);
     }
 }
