@@ -31,4 +31,9 @@ public class SecondActivity extends AppCompatActivity {
         setResult(this.RESULT_OK, resultIntent);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        saveClick(null);
+    }
 }
