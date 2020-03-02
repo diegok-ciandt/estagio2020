@@ -89,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
         String title = sharedPref.getString("TITLE", "");
         String message = sharedPref.getString("MESSAGE", "");
         binding.switch1.setChecked(isChecked);
-        binding.editText.setText(title);
+        if (binding.editText.getText().toString().isEmpty()) {
+            binding.editText.setText(title);
+        }
         if (binding.textViewResult.getText().toString().isEmpty()) {
             binding.textViewResult.setText(message);
         }
