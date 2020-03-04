@@ -24,6 +24,7 @@
             android:text="@string/btn_login"
             android:enabled="true"
             android:layout_margin="50dp"
+            android:onClick="@{v -> viewModel.onClick()}"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -106,6 +107,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+        <com.ciandt.estagio2020.setimaaula.MyComponent
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:name="@{`My Component Text`}"
+            app:url="@{viewModel.url}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

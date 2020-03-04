@@ -22,12 +22,6 @@ import com.ciandt.estagio2020.setimaaula.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    private EditText email;
-    private EditText password;
-    private Button button;
-    private ProgressBar progress;
-    private View progressBack;
     private MainViewModel viewModel;
     private ActivityMainBinding binding;
 
@@ -40,66 +34,6 @@ public class MainActivity extends AppCompatActivity {
         binding.setViewModel(viewModel);
 
         setupObservers();
-
-        email = findViewById(R.id.edit_email);
-        password = findViewById(R.id.edit_password);
-        button = findViewById(R.id.button_login);
-        progress = findViewById(R.id.progressBar);
-        progressBack = findViewById(R.id.progress_back);
-
-        password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //enableButton();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-        email.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                //enableButton();
-            }
-        });
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.sendMessage();
-                ((TextView) findViewById(R.id.textView1)).setText("Dummy text");
-            }
-        });
-    }
-
-
-    private void enableButton() {
-        if (email.getText().length() > 0 &&
-                password.getText().length() > 0) {
-            button.setEnabled(true);
-        } else {
-            button.setEnabled(false);
-        }
     }
 
     private void setupObservers() {
@@ -109,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!response.isEmpty()) {
                     showDialog();
                     viewModel.getResponse().setValue("");
+                    ((TextView) findViewById(R.id.textView1)).setText("Dummy text");
                 }
             }
         });
