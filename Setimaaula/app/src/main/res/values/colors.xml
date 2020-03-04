@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="colorHigh">#5c007a</color>
-    <color name="colorMedium">#8e24aa</color>
-    <color name="colorLow">#c158dc</color>
+    <color name="colorHigh">#007c91</color>
+    <color name="colorMedium">#00acc1</color>
+    <color name="colorLow">#5ddef4</color>
 
 </resources>

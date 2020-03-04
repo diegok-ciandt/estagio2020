@@ -2,6 +2,9 @@ package com.ciandt.estagio2020.setimaaula;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.ciandt.estagio2020.setimaaula.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,14 +28,21 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private ProgressBar progress;
     private View progressBack;
+    private MainViewModel viewModel;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(viewModel);
+
+        setupObservers();
 
         email = findViewById(R.id.edit_email);
-        password = findViewById(R.id.edit_email);
+        password = findViewById(R.id.edit_password);
         button = findViewById(R.id.button_login);
         progress = findViewById(R.id.progressBar);
         progressBack = findViewById(R.id.progress_back);
@@ -73,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage();
+                viewModel.sendMessage();
+                ((TextView) findViewById(R.id.textView1)).setText("Dummy text");
             }
         });
     }
@@ -86,6 +100,18 @@ public class MainActivity extends AppCompatActivity {
         } else {
             button.setEnabled(false);
         }
+    }
+
+    private void setupObservers() {
+        viewModel.getResponse().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String response) {
+                if (!response.isEmpty()) {
+                    showDialog();
+                    viewModel.getResponse().setValue("");
+                }
+            }
+        });
     }
 
     private void showDialog() {
@@ -103,50 +129,6 @@ public class MainActivity extends AppCompatActivity {
         });
         dialogBuilder.show();
     }
-
-    private void sendMessage() {
-        loading(true);
-        Log.d("tag", "Step 1");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("tag", "Step 2");
-                callAPI();
-                Log.d("tag", "Step 3");
-            }
-        }).start();
-        Log.d("tag", "Step 4");
-    }
-
-    private void callbackAPI() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                loading(false);
-                showDialog();
-            }
-        });
-    }
-
-    private void callAPI() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        callbackAPI();
-    }
-
-    private void loading(boolean isLoading)  {
-        if (isLoading) {
-            progress.setVisibility(View.VISIBLE);
-            progressBack.setVisibility(View.VISIBLE);
-        } else {
-            progress.setVisibility(View.GONE);
-            progressBack.setVisibility(View.GONE);
-        }
-    }
-
 
     private void goToNextScreen() {
         Intent intent = new Intent(this, MainDataBindingActivity.class);
