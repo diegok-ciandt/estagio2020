@@ -1,9 +1,12 @@
 package com.ciandt.estagio2020.oitavaaula
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.ciandt.estagio2020.oitavaaula.database.Person
 import com.ciandt.estagio2020.oitavaaula.databinding.ListItemCellBinding
 
 class UserListAdapter(var onClickListener: OnClickUser) : RecyclerView.Adapter<UserViewHolder>() {
@@ -31,8 +34,15 @@ class UserListAdapter(var onClickListener: OnClickUser) : RecyclerView.Adapter<U
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+        val person = holder.binding.person
         holder.binding.person = list.get(position)
         holder.binding.onClickListener = onClickListener
+        holder.binding.root.setOnLongClickListener(
+            View.OnLongClickListener {
+                onClickListener.onLongClick(position)
+                return@OnLongClickListener true
+            }
+        )
     }
 
 }

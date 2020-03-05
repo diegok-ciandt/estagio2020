@@ -1,6 +1,17 @@
-package com.ciandt.estagio2020.oitavaaula
+package com.ciandt.estagio2020.oitavaaula.database
 
-class Person (var firstName: String, var lastName: String, var age: Int)
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class Person (
+    @ColumnInfo var firstName: String,
+    @ColumnInfo var lastName: String,
+    @ColumnInfo var age: Int,
+    @PrimaryKey(autoGenerate = true) val idPerson: Int = 0
+)
+
 
 
 
