@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupList() {
         binding.recyclerListView.adapter = UserListAdapter(object : OnClickUser {
             override fun onClick(person: Person) {
-                //Toast.makeText(MainActivity@this, "Clicked!!!!", Toast.LENGTH_SHORT).show()
                 Log.d("TAG", "Click: "+person.firstName)
                 viewModel.testValue.postValue(person.firstName)
             }
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     var qtd = 2
     fun updateList(v: View?) {
+        viewModel.requestRepositoryData()
         val list = ArrayList<Person>()
         for (i in 0..qtd) {
             val age = Random.nextInt(90) + 1
