@@ -54,9 +54,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         listPerson.postValue(listPerson.value)
     }
 
-    fun insertPerson() {
+    fun insertPerson(person : Person) {
         Thread(Runnable {
-            val person = Person("Domenic","Royals", 25)
             db.personDao().insert(person)
             getAllPerson()
         }).start()

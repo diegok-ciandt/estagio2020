@@ -7,6 +7,11 @@
         <variable
             name="viewModel"
             type="com.ciandt.estagio2020.oitavaaula.MainViewModel" />
+
+        <variable
+            name="layoutLifeCycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,6 +93,18 @@
             android:visibility="@{viewModel.loadingState}"
             tools:visibility="visible" />
 
+        <com.ciandt.estagio2020.oitavaaula.AddComponent
+            android:id="@+id/addComponent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:translationZ="10dp"
+            android:setLifecycleOwner="@{layoutLifeCycleOwner}"
+            android:setViewModel="@{viewModel}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

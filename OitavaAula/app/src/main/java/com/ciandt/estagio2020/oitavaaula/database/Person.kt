@@ -10,7 +10,11 @@ data class Person (
     @ColumnInfo var lastName: String,
     @ColumnInfo var age: Int,
     @PrimaryKey(autoGenerate = true) val idPerson: Int = 0
-)
+) {
+    override fun toString(): String {
+        return firstName + " " + lastName + ", " + age
+    }
+}
 
 
 
